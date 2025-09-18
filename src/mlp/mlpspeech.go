@@ -1,9 +1,9 @@
 /*
-MLP architecture.
+Multilayer Perceptron with Back-propagation Architecture.
 This is a web application that uses the html/template package to create the HTML.
 The URL is http://127.0.0.1:8080/SpeechSynMLP.  There are two phases of
 operation:  the training phase and the testing phase.  Epochs consising of
-a sequence of examples are used to train the nn.  Each example consists
+a sequence of examples are used to train the Neural Network.  Each example consists
 of a spectrogram of synthetic speech and a desired class output.  The MLP
 itself consists of an input layer of nodes, one or more hidden layers containing nodes,
 and an output layer of nodes.  The nodes are fully connected by weighted links.  The
@@ -11,20 +11,29 @@ weights are trained by back propagating the output layer errors forward to the
 input layer.  The chain rule of differential calculus is used to assign credit
 for the errors in the output to the weights in the hidden layers.
 The output layer outputs are subtracted from the desired to obtain the error.
-The user trains first and then tests.
+The user trains first and then tests.  The MLP Neural Network uses Rectified
+Linear Unit (ReLU) as the activation function in the hidden layers and Softmax function
+(normalized exponential) in the output layer.  Cross-entropy loss is used to compute
+the error in the ouput layer with one-hot vector as the target or desired output.
+This is a classification problem and only one of the ouputs is one, the rest are zero.
+Therefore the outputs are probabilities with values between 0 and 1.
 
-This application classifies synthetic speech wav files.  The spectrogram of
-each speech wav file is calculated and the spectrogram is the input to the MLP.
-The MLP classifies the wav file based on its spectral content versus time. The test
+This application classifies synthetic speech patterns.  The spectrogram of
+each speech pattern file is calculated and the spectrogram is the input to the MLP.
+The MLP classifies the speech pattern based on its spectral content versus time. The test
 results are shown.  The user can plot the time domain or the spectrogram
-(frequency versus time) of the wav file.  The spectrogram is a three-dimentional
+(frequency versus time) of the synthetic speech.  The spectrogram is a three-dimentional
 plot of the spectral power versus time.  The third dimension is a grayscale color.
 Short-time Fourier Transforms (STFT) are used to compute the FFT from 20-30 ms blocks
 of synthetic speech data.
 
 The synthetic speech is generated with a sum of sinusoids (voiced) or gaussian noise (unvoiced) in
 20-30 ms frames.  If voiced, the fundamental is randomly chosen from between 200 and 800 Hz. Each voiced
-speech has 1-3 subfrequencies at a smaller amplitude than the fundamental.
+speech has 1-5 subfrequencies with a smaller amplitude than the fundamental.  The amplitudes are randomly
+chosen and can be varied.  The duration of each frame can also be varied.  The variation of these parameters
+will test the generalization capabilities of the Neural Network.  The testing phase varies the parameters
+based upon the user input.  The percentage of correct classification is presented in graphical and tabular
+forms upon completion of the testing.
 */
 
 package main
@@ -2250,7 +2259,7 @@ func handleDisplayMLP(w http.ResponseWriter, r *http.Request) {
 
 // executive creates the HTTP handlers, listens and serves
 func main() {
-	// Set up HTTP servers with handlers for training and testing the Convolutional Neural Network
+	// Set up HTTP servers with handlers for training and testing the Multilayer Perceptron Neural Network
 
 	// Create HTTP handler for training
 	http.HandleFunc(patternTrainingMLP, handleTrainingMLP)

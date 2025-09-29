@@ -667,7 +667,7 @@ func (mlp *MLP) createSpeech(pattern int) error {
 						mlp.speechPat[pattern][frame].freqs[i] + float64(mlp.delPitch)
 				} else {
 					mlp.freqs[i] =
-						mlp.speechPat[pattern][frame].freqs[i] - float64(mlp.delPitch)/mlp.speechPat[pattern][frame].freqs[i]
+						mlp.speechPat[pattern][frame].freqs[i] - float64(mlp.delPitch)
 				}
 
 				if rand.Intn(2) > 0 {

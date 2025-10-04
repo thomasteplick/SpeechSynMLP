@@ -870,9 +870,6 @@ func newMLP(r *http.Request, hiddenLayers int, plot *PlotT) (*MLP, error) {
 	// construct desired from classes, binary representation
 	mlp.desired = make([]float64, olnodes)
 
-	// construct desired from classes, one-hot vector
-	mlp.desired = make([]float64, olnodes)
-
 	// cross-entropy loss
 	mlp.data = make([]float64, epochs)
 

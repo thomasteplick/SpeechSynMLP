@@ -1579,7 +1579,7 @@ func newTestingMLP(plot *PlotT) (*MLP, error) {
 					}
 					frame++
 				}
-				fspeech.Close()
+				
 				if err = scanner.Err(); err != nil {
 					fmt.Printf("speech file scanner error: %s", err.Error())
 					return nil, fmt.Errorf("speech file scanner error: %s", err.Error())
